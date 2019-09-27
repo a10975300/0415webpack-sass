@@ -46,21 +46,41 @@ module.exports = {
                     }
                 ],
             },
-            {
+            
+              //image files
+               {
                 test: /\.(jpe?g|png|gif|svg)$/,
                 use: [
                     {
                         loader: 'url-loader',
-                        options: {limit:1000}
-    
-                    },
+                        options: {
+                           name: "[name]-[hash:5].min.[ext]",
+                           limit:2000,
+                           publicPath: "static/",
+                           outputPath: "static/",
+                      }
+					}
+
+			]
+
+		},
+
+				//Font files
                     {
-                        loader: 'image-webpack-loader',
-                        options: { byPassOnDebug: true}
-                    }
-                ]
-            }
+
+                      test: /\.(woff|woff2|ttf|otf|eot|svg)$/,
+                      loader: 'file-loader',
+                      include: [/fonts/],
+
+                      options: {
+						name: '[hash].[ext]',
+						outputPath: 'css/',
+						publicPath: url => '../css/' + url
+					}
+
+                },
         ]   //rules end
+
     },
     plugins: [
         new MiniCssExtractPlugin({
